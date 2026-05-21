@@ -1,0 +1,40 @@
+﻿<Page x:Class="UP1.Views.BookListsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="650" 
+      d:DesignWidth="1100"
+      Title="BookListsPage">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Вкладки списков -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+            <Button x:Name="btnPlan" Content="В планах" Width="140" Height="40" Margin="5" Click="BtnPlan_Click"/>
+            <Button x:Name="btnReading" Content="Читаю" Width="140" Height="40" Margin="5" Click="BtnReading_Click"/>
+            <Button x:Name="btnFinished" Content="Прочитано" Width="140" Height="40" Margin="5" Click="BtnFinished_Click"/>
+            <Button x:Name="btnDropped" Content="Заброшено" Width="140" Height="40" Margin="5" Click="BtnDropped_Click"/>
+        </StackPanel>
+
+        <!-- Поиск и сортировка -->
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,15">
+            <TextBox x:Name="txtSearchLists" Width="250" Height="35" Margin="0,0,10,0"
+             Background="#3C3C3C" Foreground="Black"/>
+
+            <ComboBox x:Name="cmbSortLists" Width="160" Height="35"/>
+        </StackPanel>
+
+        <!-- Сетка книг -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <WrapPanel x:Name="listsBooksPanel" ItemWidth="180" ItemHeight="260" 
+                       Margin="10" HorizontalAlignment="Left"/>
+        </ScrollViewer>
+    </Grid>
+</Page>

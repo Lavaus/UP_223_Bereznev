@@ -1,0 +1,29 @@
+﻿<Window x:Class="UP1.Views.EditBookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Редактирование книги" 
+        Height="550" Width="500"
+        WindowStartupLocation="CenterScreen"
+        Background="#2D2D2D">
+
+    <Grid Margin="25">
+        <StackPanel>
+            <TextBlock Text="Редактирование книги" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+            <TextBlock Text="Название книги" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtTitle" Height="35" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Жанр" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <ComboBox x:Name="cmbGenre" Height="35" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Описание" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtDescription" Height="100" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,15"/>
+
+            <TextBlock Text="Текст книги" Foreground="#AAAAAA" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtText" Height="120" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,20"/>
+
+            <Button Content="💾 Сохранить изменения" Height="50" FontSize="16" 
+                    Background="#4CAF50" Foreground="White" Click="BtnSave_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

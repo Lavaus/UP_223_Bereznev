@@ -1,0 +1,29 @@
+﻿<Page x:Class="UP1.Views.ProfilePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="650" 
+      d:DesignWidth="1100"
+      Title="ProfilePage">
+
+    <Grid Margin="30">
+        <StackPanel Width="500" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="👤 Профиль" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+
+            <TextBlock x:Name="tbFullName" FontSize="22" Foreground="White" Margin="0,10"/>
+            <TextBlock x:Name="tbLogin" FontSize="16" Foreground="#AAAAAA" Margin="0,5"/>
+            <TextBlock x:Name="tbEmail" FontSize="16" Foreground="#AAAAAA" Margin="0,5"/>
+            <TextBlock x:Name="tbRole" FontSize="18" Foreground="#4CAF50" Margin="0,15" FontWeight="SemiBold"/>
+
+            <Button Content="Подать заявку на роль Автора" 
+                    Height="50" Margin="0,30,0,10"
+                    Background="#FF9800" Foreground="White" Click="BtnApplyAuthor_Click"
+                    x:Name="btnApplyAuthor"/>
+
+            <TextBlock x:Name="tbFreezeWarning" Foreground="#F44336" FontSize="16" 
+                       TextWrapping="Wrap" Margin="0,20" Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
+</Page>
