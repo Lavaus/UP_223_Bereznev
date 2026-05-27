@@ -5,7 +5,7 @@
         Height="450" Width="380"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#2D2D2D">
+        Background="#FF153730">
 
     <Grid Margin="30">
         <StackPanel VerticalAlignment="Center">
@@ -15,10 +15,10 @@
                        HorizontalAlignment="Center" Margin="0,0,0,40"/>
 
             <TextBlock Text="Логин или Email" Foreground="#AAAAAA" Margin="0,0,0,5"/>
-            <TextBox x:Name="txtLogin" Height="35" FontSize="14" Margin="0,0,0,15" Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+            <TextBox x:Name="txtLogin" Height="35" FontSize="14" Margin="0,0,0,15" Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <TextBlock Text="Пароль" Foreground="#AAAAAA" Margin="0,0,0,5"/>
-            <PasswordBox x:Name="txtPassword" Height="35" FontSize="14" Margin="0,0,0,20" Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+            <PasswordBox x:Name="txtPassword" Height="35" FontSize="14" Margin="0,0,0,20" Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <Button Content="Войти" 
                     Click="BtnLogin_Click"

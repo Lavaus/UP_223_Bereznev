@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,6 +11,7 @@ namespace UP1.Views
     public partial class BookListsPage : Page
     {
         private string currentShelf = "В планах";
+        private List<Book> currentBooks;
 
         public BookListsPage()
         {
@@ -23,69 +25,52 @@ namespace UP1.Views
             var user = MainWindow.CurrentUser;
             if (user == null) return;
 
-            var readingLists = App.Db.ReadingList
-                .Where(r => r.UserID == user.UserID)
+            currentBooks = App.Db.ReadingList
+                .Where(r => r.UserID == user.UserID && r.Status == shelf)
                 .Include(r => r.Book)
+                .Include(r => r.Book.Users)
+                .Select(r => r.Book)
                 .ToList();
 
-            var books = readingLists.Select(r => r.Book).ToList();
-
-            DisplayBooks(books);
+            ApplyFilters();
         }
 
-        private void DisplayBooks(System.Collections.Generic.List<Book> books)
+        private void ApplyFilters()
         {
-            listsBooksPanel.Children.Clear();
+            if (currentBooks == null) return;
 
-            foreach (var book in books)
-            {
-                var card = CreateBookCard(book);
-                listsBooksPanel.Children.Add(card);
-            }
+            var filtered = currentBooks.AsEnumerable();
+
+            // Поиск
+            var search = txtSearchLists.Text?.ToLower().Trim() ?? "";
+            if (!string.IsNullOrEmpty(search))
+                filtered = filtered.Where(b =>
+                    (b.Title?.ToLower().Contains(search) ?? false) ||
+                    (b.Users?.DisplayName?.ToLower().Contains(search) ?? false));
+
+            // Сортировка
+            if (cmbSortLists.SelectedIndex == 1)
+                filtered = filtered.OrderBy(b => b.Users?.DisplayName);
+            else
+                filtered = filtered.OrderBy(b => b.Title);
+
+            var result = filtered.ToList();
+
+            booksControl.ItemsSource = result;
+
+            tbEmpty.Visibility = result.Count == 0
+                ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private Border CreateBookCard(Book book)
+     
+        private void BtnBookCard_Click(object sender, RoutedEventArgs e)
         {
-            var border = new Border
-            {
-                Width = 170,
-                Height = 260,
-                Background = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Color.FromRgb(45, 45, 48)),
-                CornerRadius = new CornerRadius(10),
-                Margin = new Thickness(12),
-                Cursor = System.Windows.Input.Cursors.Hand
-            };
-
-            var stack = new StackPanel { Margin = new Thickness(10) };
-
-            var cover = new TextBlock { Text = "📖", FontSize = 60, HorizontalAlignment = HorizontalAlignment.Center };
-            var title = new TextBlock
-            {
-                Text = book.Title ?? "Без названия",
-                FontWeight = FontWeights.Bold,
-                TextWrapping = TextWrapping.Wrap,
-                TextAlignment = TextAlignment.Center,
-                Foreground = System.Windows.Media.Brushes.White
-            };
-            var author = new TextBlock
-            {
-                Text = book.Users?.DisplayName ?? "Автор",
-                TextAlignment = TextAlignment.Center,
-                Foreground = System.Windows.Media.Brushes.LightGray
-            };
-
-            stack.Children.Add(cover);
-            stack.Children.Add(title);
-            stack.Children.Add(author);
-            border.Child = stack;
-
-            border.MouseLeftButtonUp += (s, e) =>
-            {
+            if ((sender as Button)?.Tag is Book book)
                 NavigationService.Navigate(new BookDetailsPage(book));
-            };
-
-            return border;
         }
+
+        private void TxtSearchLists_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
+        private void CmbSortLists_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilters();
 
         private void BtnPlan_Click(object sender, RoutedEventArgs e) => LoadShelf("В планах");
         private void BtnReading_Click(object sender, RoutedEventArgs e) => LoadShelf("Читаю");

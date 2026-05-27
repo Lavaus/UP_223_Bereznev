@@ -22,7 +22,7 @@
 
         <!-- DataGrid -->
         <DataGrid x:Name="dgBooks" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
-                  Background="#FF99BDB5" Foreground="White" RowBackground="#2D2D2D"
+                  Background="#FF99BDB5" Foreground="Black" RowBackground="#2D2D2D"
                   AlternatingRowBackground="#333333" GridLinesVisibility="None"
                   MouseDoubleClick="DgBooks_MouseDoubleClick"
                   RowHeight="80">

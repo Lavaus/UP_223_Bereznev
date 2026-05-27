@@ -4,7 +4,7 @@
         Title="Добавить новое чтиво" 
         Height="650" Width="600"
         WindowStartupLocation="CenterScreen"
-        Background="#FF2E544C">
+        Background="#FF153730">
 
     <Grid Margin="25">
         <StackPanel>

@@ -96,6 +96,9 @@
     <None Include="read.edmx.diagram">
       <DependentUpon>read.edmx</DependentUpon>
     </None>
+    <Compile Include="Windows\ReasonInputWindow.xaml.cs">
+      <DependentUpon>ReasonInputWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\FrozenAppealWindow.xaml.cs">
       <DependentUpon>FrozenAppealWindow.xaml</DependentUpon>
     </Compile>
@@ -141,7 +144,7 @@
     <Compile Include="Users.cs">
       <DependentUpon>read.tt</DependentUpon>
     </Compile>
-    <Compile Include="Views\AddBookWindow.xaml.cs">
+    <Compile Include="Windows\AddBookWindow.xaml.cs">
       <DependentUpon>AddBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AdminPage.xaml.cs">
@@ -162,7 +165,7 @@
     <Compile Include="Views\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ReadBookWindow.xaml.cs">
+    <Compile Include="Windows\ReadBookWindow.xaml.cs">
       <DependentUpon>ReadBookWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Windows\EditBookWindow.xaml.cs">
@@ -203,6 +206,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Windows\ReasonInputWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\FrozenAppealWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -211,7 +218,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\AddBookWindow.xaml">
+    <Page Include="Windows\AddBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,7 +246,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ReadBookWindow.xaml">
+    <Page Include="Windows\ReadBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

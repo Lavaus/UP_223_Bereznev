@@ -16,7 +16,21 @@ namespace UP1.Views
         public BookCatalogPage()
         {
             InitializeComponent();
+            LoadGenresFilter();
             LoadBooks();
+        }
+
+        private void LoadGenresFilter()
+        {
+            var genres = App.Db.Genre.OrderBy(g => g.GenreName).ToList();
+
+            cmbSort.Items.Clear();
+            cmbSort.Items.Add(new ComboBoxItem { Content = "Все жанры", Tag = 0 });
+            foreach (var genre in genres)
+            {
+                cmbSort.Items.Add(new ComboBoxItem { Content = genre.GenreName, Tag = genre.GenreID });
+            }
+            cmbSort.SelectedIndex = 0;
         }
 
         private void LoadBooks()
@@ -24,9 +38,32 @@ namespace UP1.Views
             allBooks = App.Db.Book
                 .Include(b => b.Users)
                 .Include(b => b.Genre)
+                .Where(b => !b.IsFrozen)
                 .ToList();
 
-            dgBooks.ItemsSource = allBooks;
+            ApplyFilters();
+        }
+
+        private void ApplyFilters()
+        {
+            if (allBooks == null) return;
+
+            var searchText = txtSearch.Text?.ToLower().Trim() ?? "";
+
+            // Фильтр по поисковому тексту
+            var filtered = allBooks.Where(b =>
+                string.IsNullOrEmpty(searchText) ||
+                (b.Title?.ToLower().Contains(searchText) ?? false) ||
+                (b.Users?.DisplayName?.ToLower().Contains(searchText) ?? false)
+            );
+
+            // Фильтр по жанру
+            if (cmbSort.SelectedItem is ComboBoxItem selected && selected.Tag is int genreId && genreId != 0)
+            {
+                filtered = filtered.Where(b => b.Genre != null && b.Genre.Any(g => g.GenreID == genreId));
+            }
+
+            dgBooks.ItemsSource = filtered.ToList();
         }
 
         private void DgBooks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -39,16 +76,7 @@ namespace UP1.Views
 
         private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (allBooks == null) return;
-
-            var searchText = txtSearch.Text.ToLower().Trim();
-
-            var filtered = allBooks.Where(b =>
-                (b.Title?.ToLower().Contains(searchText) ?? false) ||
-                (b.Users?.DisplayName?.ToLower().Contains(searchText) ?? false)
-            ).ToList();
-
-            dgBooks.ItemsSource = filtered;
+            ApplyFilters();
         }
 
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
@@ -56,7 +84,6 @@ namespace UP1.Views
             LoadBooks();
         }
 
-        // Для отображения жанров в DataGrid создадим конвертер на лету
         private void DgBooks_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if (e.PropertyName == "Genre")
@@ -75,19 +102,16 @@ namespace UP1.Views
 
         private void CmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            ApplyFilters();
         }
     }
 
-    // Простой конвертер жанров
     public class GenreConverter : System.Windows.Data.IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             if (value is ICollection<Genre> genres && genres.Any())
-            {
                 return string.Join(", ", genres.Select(g => g.GenreName));
-            }
             return "";
         }
 

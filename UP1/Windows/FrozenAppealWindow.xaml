@@ -5,13 +5,13 @@
         Height="460" Width="460"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#2D2D2D">
+        Background="#FF153730">
 
     <Grid Margin="30">
         <StackPanel>
 
             <TextBlock Text="⚠️ Аккаунт заморожен"
-                       FontSize="22" FontWeight="Bold" Foreground="#F44336"
+                       FontSize="22" FontWeight="Bold" Foreground="#FFC86DD8"
                        HorizontalAlignment="Center" Margin="0,0,0,14"/>
 
             <TextBlock x:Name="tbStatusText"
@@ -25,13 +25,13 @@
                            FontSize="13" Margin="0,0,0,6"/>
                 <TextBox x:Name="txtReason"
                          Height="110" FontSize="13"
-                         Background="#3C3C3C" Foreground="White" BorderBrush="#555555"
+                         Background="#FF2E544C" Foreground="White" BorderBrush="#555555"
                          AcceptsReturn="True" TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Auto" Margin="0,0,0,18"/>
                 <Button Content="Подать апелляцию"
                         Click="BtnSubmit_Click"
                         Height="44" FontSize="15"
-                        Background="#FF9800" Foreground="White" Margin="0,0,0,10"/>
+                        Background="#FFC86DD8" Foreground="White" Margin="0,0,0,10"/>
             </StackPanel>
 
             <!-- Информация об уже поданной апелляции -->

@@ -19,30 +19,20 @@ namespace UP1.Windows
         {
             if (CurrentUser == null) return;
 
-            string roleName = CurrentUser.Role?.RoleName?.ToLower() ?? "";
+            string roleName = (CurrentUser.Role?.RoleName ?? "").ToLower().Trim();
 
-            // Кнопки ролей
-            btnAuthor.Visibility = (roleName == "author" || roleName == "administrator")
+            bool isAdmin = roleName == "администратор";
+            bool isAuthor = roleName == "автор";
+
+            // Кнопка автора — видна автору 
+            btnAuthor.Visibility = (isAuthor)
                 ? Visibility.Visible : Visibility.Collapsed;
 
-            btnAdmin.Visibility = (roleName == "administrator")
+            // Кнопка администратора —  для администратора
+            btnAdmin.Visibility = isAdmin
                 ? Visibility.Visible : Visibility.Collapsed;
 
-            // Заморозка аккаунта
-            if (CurrentUser.IsFrozen)
-            {
-                btnFreezeWarning.Visibility = Visibility.Visible;
-                btnCatalog.IsEnabled = false;
-                btnLists.IsEnabled = false;
-                btnAuthor.IsEnabled = false;
-            }
-            else
-            {
-                btnFreezeWarning.Visibility = Visibility.Collapsed;
-                btnCatalog.IsEnabled = true;
-                btnLists.IsEnabled = true;
-                btnAuthor.IsEnabled = true;
-            }
+            
         }
 
         private void LoadDefaultPage()
@@ -51,7 +41,6 @@ namespace UP1.Windows
             tbPageTitle.Text = "Каталог книг";
         }
 
-        // Обработчики кнопок (оставляем)
         private void BtnCatalog_Click(object sender, RoutedEventArgs e)
         {
             if (CurrentUser?.IsFrozen == true) return;

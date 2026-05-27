@@ -5,7 +5,7 @@
         Height="635" Width="400"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
-        Background="#2D2D2D">
+        Background="#FF153730">
 
     <Grid Margin="30">
         <StackPanel VerticalAlignment="Center">
@@ -19,23 +19,23 @@
 
             <TextBlock Text="Отображаемое имя" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <TextBox x:Name="txtDisplayName" Height="35" FontSize="14" Margin="0,0,0,12"
-                     Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+                     Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <TextBlock Text="Логин" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <TextBox x:Name="txtLogin" Height="35" FontSize="14" Margin="0,0,0,12"
-                     Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+                     Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <TextBlock Text="Email" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <TextBox x:Name="txtEmail" Height="35" FontSize="14" Margin="0,0,0,12"
-                     Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+                     Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <TextBlock Text="Пароль" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <PasswordBox x:Name="txtPassword" Height="35" FontSize="14" Margin="0,0,0,12"
-                         Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+                         Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <TextBlock Text="Повтор пароля" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <PasswordBox x:Name="txtPasswordConfirm" Height="35" FontSize="14" Margin="0,0,0,22"
-                         Background="#3C3C3C" Foreground="White" BorderBrush="#555555"/>
+                         Background="#FF2E544C" Foreground="White" BorderBrush="#555555"/>
 
             <Button Content="Зарегистрироваться"
                     Click="BtnRegister_Click"
