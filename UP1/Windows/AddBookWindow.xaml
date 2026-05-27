@@ -11,7 +11,7 @@
             <TextBlock Text="Новое чтиво" FontSize="24" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,20"/>
 
             <TextBlock Text="Название книги" Foreground="#AAAAAA" Margin="0,0,0,5"/>
-            <TextBox x:Name="txtTitle" Height="35" Margin="0,0,0,15" TextChanged="txtTitle_TextChanged" Background="#FF99BDB5"/>
+            <TextBox x:Name="txtTitle" Height="35" Margin="0,0,0,15" TextChanged="txtTitle_TextChanged" Background="white"/>
 
             <TextBlock Text="Автор" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <TextBox x:Name="txtAuthor" Height="35" Margin="0,0,0,15" IsReadOnly="True"/>

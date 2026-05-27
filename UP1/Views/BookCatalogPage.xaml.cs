@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using UP1;
 
 namespace UP1.Views
@@ -20,19 +19,20 @@ namespace UP1.Views
             LoadBooks();
         }
 
+      
         private void LoadGenresFilter()
         {
             var genres = App.Db.Genre.OrderBy(g => g.GenreName).ToList();
 
-            cmbSort.Items.Clear();
-            cmbSort.Items.Add(new ComboBoxItem { Content = "Все жанры", Tag = 0 });
+            cmbGenre.Items.Clear();
+            cmbGenre.Items.Add(new ComboBoxItem { Content = "Все жанры", Tag = 0 });
             foreach (var genre in genres)
-            {
-                cmbSort.Items.Add(new ComboBoxItem { Content = genre.GenreName, Tag = genre.GenreID });
-            }
-            cmbSort.SelectedIndex = 0;
+                cmbGenre.Items.Add(new ComboBoxItem { Content = genre.GenreName, Tag = genre.GenreID });
+
+            cmbGenre.SelectedIndex = 0;
         }
 
+ 
         private void LoadBooks()
         {
             allBooks = App.Db.Book
@@ -43,81 +43,45 @@ namespace UP1.Views
 
             ApplyFilters();
         }
-
         private void ApplyFilters()
         {
             if (allBooks == null) return;
 
+            var filtered = allBooks.AsEnumerable();
+
             var searchText = txtSearch.Text?.ToLower().Trim() ?? "";
+            if (!string.IsNullOrEmpty(searchText))
+                filtered = filtered.Where(b =>
+                    (b.Title?.ToLower().Contains(searchText) ?? false) ||
+                    (b.Users?.DisplayName?.ToLower().Contains(searchText) ?? false));
 
-            // Фильтр по поисковому тексту
-            var filtered = allBooks.Where(b =>
-                string.IsNullOrEmpty(searchText) ||
-                (b.Title?.ToLower().Contains(searchText) ?? false) ||
-                (b.Users?.DisplayName?.ToLower().Contains(searchText) ?? false)
-            );
+  
+            if (cmbGenre.SelectedItem is ComboBoxItem genreItem &&
+                genreItem.Tag is int genreId && genreId != 0)
+                filtered = filtered.Where(b =>
+                    b.Genre != null && b.Genre.Any(g => g.GenreID == genreId));
+            filtered = cmbSort.SelectedIndex == 1
+                ? filtered.OrderBy(b => b.Users?.DisplayName)
+                : filtered.OrderBy(b => b.Title);
 
-            // Фильтр по жанру
-            if (cmbSort.SelectedItem is ComboBoxItem selected && selected.Tag is int genreId && genreId != 0)
-            {
-                filtered = filtered.Where(b => b.Genre != null && b.Genre.Any(g => g.GenreID == genreId));
-            }
+            var result = filtered.ToList();
 
-            dgBooks.ItemsSource = filtered.ToList();
+            booksControl.ItemsSource = result;
+
+            tbEmpty.Visibility = result.Count == 0
+                ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void DgBooks_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void BtnBookCard_Click(object sender, RoutedEventArgs e)
         {
-            if (dgBooks.SelectedItem is Book book)
-            {
+            if ((sender as Button)?.Tag is Book book)
                 NavigationService.Navigate(new BookDetailsPage(book));
-            }
         }
 
-        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
+        private void TxtSearch_TextChanged(object sender, TextChangedEventArgs e) => ApplyFilters();
+        private void CmbGenre_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilters();
+        private void CmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e) => ApplyFilters();
 
-        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
-        {
-            LoadBooks();
-        }
-
-        private void DgBooks_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
-        {
-            if (e.PropertyName == "Genre")
-            {
-                e.Column = new DataGridTextColumn
-                {
-                    Header = "Жанр",
-                    Binding = new System.Windows.Data.Binding("Genre")
-                    {
-                        Converter = new GenreConverter()
-                    },
-                    Width = 150
-                };
-            }
-        }
-
-        private void CmbSort_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ApplyFilters();
-        }
-    }
-
-    public class GenreConverter : System.Windows.Data.IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is ICollection<Genre> genres && genres.Any())
-                return string.Join(", ", genres.Select(g => g.GenreName));
-            return "";
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e) => LoadBooks();
     }
 }

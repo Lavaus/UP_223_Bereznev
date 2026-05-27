@@ -22,7 +22,6 @@
                     Click="BtnAddNewBook_Click"/>
         </StackPanel>
 
-        <!-- Сетка книг автора -->
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Foreground="#FF2E544C">
             <WrapPanel x:Name="authorBooksPanel" ItemWidth="180" ItemHeight="260" 
                        Margin="10" HorizontalAlignment="Left"/>

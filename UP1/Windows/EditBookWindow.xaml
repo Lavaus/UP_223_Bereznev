@@ -22,8 +22,8 @@
             <TextBlock Text="Текст книги" Foreground="#AAAAAA" Margin="0,0,0,5"/>
             <TextBox x:Name="txtText" Height="120" TextWrapping="Wrap" AcceptsReturn="True" Margin="0,0,0,20"/>
 
-            <Button Content="💾 Сохранить изменения" Height="50" FontSize="16" 
-                    Background="#4CAF50" Foreground="White" Click="BtnSave_Click"/>
+            <Button Content="Сохранить изменения" Height="50" FontSize="16" 
+                    Background="#FF2E544C" Foreground="White" Click="BtnSave_Click"/>
         </StackPanel>
     </Grid>
 </Window>
