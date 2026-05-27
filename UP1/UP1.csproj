@@ -96,6 +96,9 @@
     <None Include="read.edmx.diagram">
       <DependentUpon>read.edmx</DependentUpon>
     </None>
+    <Compile Include="Windows\FrozenAppealWindow.xaml.cs">
+      <DependentUpon>FrozenAppealWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Genre.cs">
       <DependentUpon>read.tt</DependentUpon>
     </Compile>
@@ -116,6 +119,9 @@
     </Compile>
     <Compile Include="ReadingList.cs">
       <DependentUpon>read.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\RegisterWindow.xaml.cs">
+      <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Review.cs">
       <DependentUpon>read.tt</DependentUpon>
@@ -197,6 +203,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Windows\FrozenAppealWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\RegisterWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AddBookWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
